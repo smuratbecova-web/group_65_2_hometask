@@ -1,0 +1,9 @@
+<h1>Categories</h1>
+
+{% for category in categories %}
+    <h2>{{ category.title }}</h2>
+    <p>{{ category.description }}</p>
+    <hr>
+{% empty %}
+    <p>No active categories found.</p>
+{% endfor %}
