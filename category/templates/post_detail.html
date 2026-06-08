@@ -1,0 +1,7 @@
+<h1>{{ post.title }}</h1>
+
+<p>{{ post.content }}</p>
+
+<p>Category: {{ post.category.title }}</p>
+
+<a href="{% url 'post_list' %}">← back</a>
