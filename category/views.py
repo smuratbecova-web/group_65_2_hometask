@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse_lazy
 from .models import Post, Category
-
+from .forms import PostForm, CategoryForm
 
 class PostListView(ListView):
     model = Post
@@ -12,8 +13,20 @@ class PostListView(ListView):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.filter(is_active=True)
         return context
-    
+
 class PostDetailView(DetailView):
     model = Post
     template_name = "post_detail.html"
     context_object_name = "post"
+
+class PostCreateView(CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'post_form.html'
+    success_url = reverse_lazy('post_list')
+
+class CategoryCreateView(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'category_form.html'
+    success_url = reverse_lazy('post_list')
