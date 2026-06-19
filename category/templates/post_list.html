@@ -7,12 +7,16 @@
 <body>
     <h1>Posts</h1>
 
-    <a href="{% url 'post_create' %}" style="display: inline-block; padding: 10px; background: green; color: white; text-decoration: none; border-radius: 5px; margin-right: 10px;">
+    <a href="{% url 'post_create' %}" style="display: inline-block; padding: 10px; background: green; color: white; text-decoration: none;">
         + Create Post
     </a>
-    <a href="{% url 'category_create' %}" style="display: inline-block; padding: 10px; background: blue; color: white; text-decoration: none; border-radius: 5px;">
+    <a href="{% url 'category_create' %}" style="display: inline-block; padding: 10px; background: blue; color: white; text-decoration: none;">
         + Create Category
     </a>
+    <a href="{% url 'my_posts' %}" style="display: inline-block; padding: 10px; background: orange; color: white; text-decoration: none;">
+        My Posts
+    </a>
+
     <hr>
 
     {% for post in posts %}
@@ -20,15 +24,20 @@
             <a href="{% url 'post_detail' post.id %}">
                 {{ post.title }}
             </a>
+            
+            {% if user.is_authenticated %}
+                | <a href="{% url 'post_update' post.pk %}">Edit</a> 
+                | <a href="{% url 'post_delete' post.pk %}">Delete</a>
+            {% endif %}
         </p>
     {% endfor %}
 
     <hr>
     <h2>Categories</h2>
     <ul>
-    {% for category in categories %}
-        <li>{{ category.title }}</li>
-    {% endfor %}
+        {% for category in categories %}
+            <li>{{ category.title }}</li>
+        {% endfor %}
     </ul>
 </body>
 </html>
